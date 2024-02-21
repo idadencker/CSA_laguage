@@ -1,0 +1,11 @@
+Text,POS,dep
+My,PRON,poss
+name,NOUN,nsubj
+is,AUX,ROOT
+Ida,PROPN,attr
+.,PUNCT,punct
+I,PRON,nsubj
+am,AUX,ROOT
+a,DET,det
+student,NOUN,attr
+!,PUNCT,punct
