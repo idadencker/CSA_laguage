@@ -5,7 +5,7 @@ def main():
     while True:
         print(i)
         i+=1
-#will run forever
+#this will run forever
 
 if __name__=="__main__":
     main()
