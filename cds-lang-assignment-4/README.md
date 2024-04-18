@@ -7,7 +7,7 @@ Plots demonstrating the distribution of all emotion labels in each season (8 sea
 
 
 ## Data source
-The dataset is the ```Game of Thrones Script All Seasons``` dataset which consists of all spoken lines from the popular show Game of Thrones. The dataset has a total of 23911 lines. The dataset can be found and downloaded [here] (https://www.kaggle.com/datasets/albenft/game-of-thrones-script-all-seasons?select%253DGame_of_Thrones_Script.csv). 
+The dataset is the ```Game of Thrones Script All Seasons``` dataset which consists of all spoken lines from the popular show Game of Thrones. The dataset has a total of 23911 lines. The dataset can be found and downloaded [here](https://www.kaggle.com/datasets/albenft/game-of-thrones-script-all-seasons?select%253DGame_of_Thrones_Script.csv). 
 
 
 ## Repository structure
