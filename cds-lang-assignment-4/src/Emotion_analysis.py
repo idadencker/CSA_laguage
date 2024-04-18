@@ -6,46 +6,77 @@ import seaborn as sns
 
 
 def extract_emotions(df):
+    '''
+    A pipeline is specified for easy processing
+    '''
     classifier = pipeline("text-classification", 
                         model="j-hartmann/emotion-english-distilroberta-base", 
                         return_all_scores=False)
 
+    '''
+    Text is made into list. Hereafter the text is classified using the pipeline and values are saved
+    '''
     text = [str(i) for i in df['Sentence'].tolist()]
-    emotion_scores_list = classifier(text)
+    emotion_scores = classifier(text)
 
-    # Initialize empty lists to store labels and scores
+    '''
+    Appends the items to the dataframe
+    '''
     labels = []
     scores = []
 
-    # Iterate through each item in emotion_scores_list
-    for item in emotion_scores_list:
+    for item in emotion_scores:
         labels.append(item['label'])
         scores.append(item['score'])
 
-    # Append the labels and scores to the DataFrame
     df['emotion'] = labels
     df['score'] = scores
 
     return df
 
+
+
 def emotions_count_for_seasons(df):
-    # Iterate through each season label ('Season 1', 'Season 2', ..., 'Season 8')
-    for season_label in df['Season'].unique():
-        season_data = df[df['Season'] == season_label]
-        plt.figure(figsize=(10, 5))
-        ax = season_data['emotion'].value_counts().sort_index().plot(kind='bar', title=f'Count of emotions in {season_label}')
-        ax.set_xlabel('Emotions')
-        ax.set_ylabel('Count')
-        plt.show()
-        plt.savefig(f"out/emotions_count_{season_label}.png")
+    fig, axs = plt.subplots(3, 3, figsize=(15, 15))
+    '''
+    Loops through data and creates a histogram plot for each season
+    '''
+    for i, season_label in enumerate(df['Season'].unique()):
+            season_data = df[df['Season'] == season_label]
+            ax = season_data['emotion'].value_counts().sort_index().plot(kind='bar', title=f'Count of emotions in {season_label}', ax=axs[i // 3, i % 3])
+            ax.set_xlabel('Emotions')
+            ax.set_ylabel('Count')
+
+    plt.tight_layout()
+    plt.savefig("out/Count_all_emotions_for_seasons.png")
+    plt.show()
 
 
 def season_rel_freq_for_emotions(df):
-    
+    fig, axs = plt.subplots(3, 3, figsize=(15, 15))
+    '''
+    Loops through data and creates a histogram plot for each emotion
+    '''
+    for i, emotion_label in enumerate(df['emotion'].unique()):
+        emotion_data = df[df['emotion'] == emotion_label]
+        counts = emotion_data['Season'].value_counts().sort_index()
+        total_count = counts.sum()
+        relative_freq = counts / total_count  
+        ax = relative_freq.plot(kind='bar', title=f'Relative frequency of {emotion_label} across all seasons', ax=axs[i // 3, i % 3])
+        ax.set_xlabel('seasons')
+        ax.set_ylabel('Relative Frequency')
+
+    plt.tight_layout()
+    plt.savefig("out/Relative_frequency_of_emotions_across_all_seasons.png")
+    plt.show()
+
 
 
 def main():
     df = pd.read_csv("../../../../cds-lang-data/GoT-scripts/Game_of_Thrones_Script.csv")
+    df = extract_emotions(df)
+    emotions_count_for_seasons(df)
+    season_rel_freq_for_emotions(df)
 
     
 
