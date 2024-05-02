@@ -26,7 +26,7 @@ To make the program work do the following:
 ```python
 $ git clone "URL HERE"
 ```
-1) download the USEcorpus.zip and place the unzipped data in the 'in' folder
+2) download the USEcorpus.zip and place the unzipped data in the 'in' folder
 3) In a terminal set your directory:
 ```python
 $ cd assignment_1
